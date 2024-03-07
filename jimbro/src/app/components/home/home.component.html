@@ -1,0 +1,32 @@
+<div class="root-container">
+
+    <div class="container">
+        <h1>JIMBRO</h1>
+        <h2>Gym Assistant & Workout Tracker</h2>
+        <br>
+        <ul>
+            <li>
+                Create and manage workout plans
+            </li>
+            <li>
+                Keep track of day-to-day progress
+            </li>
+            <li>
+                View elementary stats & charts of the data
+            </li>
+        </ul>
+        <section class="button-container">
+            <button class="panel" type="button" tabindex="1" (click)="createNewPlan()">
+                <img src="../../../assets/plus-icon.svg" alt="New Workout Plan">
+                New Plan
+            </button>
+            <input type="file" (change)="openExistingPlan($event)" accept=".csv" #fileUpload>
+            <button class="panel" type="button" tabindex="1" (click)="fileUpload.click()">
+                
+                <img src="../../../assets/upload-icon.svg" alt="New Workout Plan">
+                Open Plan
+            </button>
+        </section>   
+    </div>
+
+</div>

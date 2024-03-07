@@ -1,0 +1,17 @@
+@import '../styles';
+header {
+    background-color: $yellow;
+    color: $blue;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font: $title-font;
+    line-height: 3rem;
+}
+
+section {
+    height: calc(100vh - 56px);
+    background-color: white;
+}

@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monofett&display=swap');
+
+$font-family: "Roboto", sans-serif;
+$font-size: 16px;
+$blue: #022C43;
+$green: #8FD779;
+$yellow: #F9F871;
+$red: #FF0060;
+// $dark-mode: false !default;
+$title-font: 3rem "Monofett", "Roboto Mono", monospace;
+$subtitle-font: 200 1rem "Roboto Mono", monospace;
+$heading-font: 700 1.2rem "Roboto Mono", monospace;
+$subheading-font: 200 1rem "Robot", sans-serif;
+
+// @if $dark-mode {
+//     $light: #49108B;
+//     $dark: #F3F8FF;
+// }
+
+* {
+    font-family: $font-family;
+    font-size: $font-size;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
