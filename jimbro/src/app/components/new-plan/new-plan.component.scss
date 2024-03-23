@@ -1,0 +1,118 @@
+@import '../../../styles.scss';
+
+.root-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+    background-color: $blue;
+    justify-content: center;
+}
+
+.column {
+    display: flex;
+    height: 100%;
+    width: calc(100% / 3);
+    background-color: $yellow;
+    padding: 8px;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+
+    input {
+        width: 100%;
+        height: 2rem;
+        padding: 8px;
+    }
+
+    .plan-header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        label {
+            font-weight: 300;
+            font-size: 0.75rem;
+        }
+    }
+}
+
+.workouts {
+    border: 2px dashed $red;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 16px;
+    background-color: white;
+    gap: 32px;
+
+    .workout-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .workout-button {
+        width: 100%;
+        padding: 8px 16px;
+        background-color: $yellow;
+        box-shadow: inset 8px 8px 0 0 white, 9px 9px 0 0 $yellow;
+        outline: 0;
+        border: 1px solid $blue;
+        font: $subheading-font;
+        font-weight: 500;
+        cursor: pointer;
+        color: black;
+    }
+
+    .workout-button.add-workout{
+        background-color: $green;
+        box-shadow: inset 8px 8px 0 0 white, 9px 9px 0 0 $green;
+        border: 1px solid $blue;
+        color: black;
+    }
+
+    .workout-button:hover {
+        box-shadow: none;
+        transition: 0.4s;
+    }
+}
+
+.workout-header {
+    font: $heading-font;
+    text-align: center;
+}
+
+.empty-column-header {
+    border: 2px dashed white;
+    background-color: $red;
+    padding: 8px;
+    color: white;
+}
+
+.record {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    border: 1px solid black;
+    padding: 8px;
+    // font: $subheading-font;
+    background-color: $yellow;
+
+    .weight-info {
+        // width: 100%;
+        display: flex;
+        gap: 2px;
+    }
+
+    label:nth-of-type(1) {
+        width: 30%;
+    }
+
+    label:nth-last-child(-n + 2) {
+        width: 30%;
+    }
+}
+
