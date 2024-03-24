@@ -1,0 +1,43 @@
+{
+    "name": "Push Pull Legs",
+    "dayCount": 1,
+    "workouts": [
+        {
+            "name": "Push 1",
+            "exerciseCount": 2,
+            "exercises": [
+                {
+                    "name": "Smith Bench Press",
+                    "records": [
+                        {
+                            "date": "2024-03-18",
+                            "weight": 10,
+                            "unit": "kg",
+                            "sets": 2,
+                            "reps": 10
+                        },
+                        {
+                            "date": "2024-03-18",
+                            "weight": 7.5,
+                            "unit": "kg",
+                            "sets": 1,
+                            "reps": 12
+                        }
+                    ]
+                },
+                {
+                    "name": "Machine Incline Press",
+                    "records": [
+                        {
+                            "date": "2024-03-18",
+                            "weight": 7.5,
+                            "unit": "kg",
+                            "sets": 3,
+                            "reps": 10
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

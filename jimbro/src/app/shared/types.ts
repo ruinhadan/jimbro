@@ -18,7 +18,7 @@ export type Exercise = {
 export type Record = {
     date: string,
     weight: number,
-    unit: 'kg',
+    unit: string,
     sets: number,
     reps: number,
     eVal?: number

@@ -15,7 +15,6 @@
     flex-direction: column;
     width: 50%;
     height: 100%;
-    // gap: 16px;
     padding: 8px;
     border: 1px solid $blue;
     align-items: center;
@@ -70,12 +69,6 @@ h1 {
     box-shadow: none;
     transition: 0.4s;
 }
-
-
-// .panel:nth-of-type(2):hover {
-//     transform: translate(-8px, -8px);
-//     box-shadow: 8px 8px 1px 0 $green;
-// }
 
 input[type="file"] {
     display: none;

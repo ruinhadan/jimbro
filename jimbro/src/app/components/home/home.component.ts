@@ -13,12 +13,24 @@ export class HomeComponent {
 
   }
   createNewPlan() {
-    this.router.navigate(["/new-plan"])
+    this.router.navigate(["/plan"], {state: {name: '', dayCount: 0}})
   }
   openExistingPlan(event: Event) {
-    // this.router.navigate(["/open-plan"])
     const target = event.target as HTMLInputElement;
-    const file: File = target.files![0];
+    const files = target.files;
+    if(files && files.length > 0) {
+      const file: File = files.item(0)!;
+      if(file.type != 'application/json'){
+        alert("Please upload a json file");
+        return;
+      }    
+      const reader: FileReader = new FileReader();
+      reader.readAsText(file)
+      reader.onload = (e) => {
+        let plan: string = reader.result as string;
+        this.router.navigate(['/plan'], {state: JSON.parse(plan)})
+      }
+    }
     
   }
 }

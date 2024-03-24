@@ -10,7 +10,7 @@
                         workout.name: 'Empty Workout' }}</button>
                 </ng-container>
             </div>
-            <button class="workout-button add-workout" (click)="addWorkout()">Add Workout</button>
+            <button class="add-workout" (click)="addWorkout()">Add Workout</button>
         </section>
     </div>
     <div class="column">
@@ -28,8 +28,9 @@
                         exercise.name: 'Empty Exercise' }}</button>
                 </ng-container>
             </div>
-            <button class="workout-button add-workout" (click)="addExercise()">Add Exercise</button>
+            <button class="add-workout" (click)="addExercise()">Add Exercise</button>
         </section>
+        <a class="download-button" [download]="planFilename" title="Download Plan" [href]="downloadPlanURI" (click)="updatePlanFile()">Download Plan</a>
     </div>
     <div class="column">
         <section class="exercise-header" *ngIf="plan.workouts && plan.workouts[selectedWorkoutIndex].exercises">
@@ -74,7 +75,7 @@
                     </div>
                 </ng-container>
             </div>
-            <button class="workout-button add-workout" (click)="addRecord()">Add Record</button>
+            <button class="add-workout" (click)="addRecord()">Add Record</button>
         </section>
     </div>
 </div>

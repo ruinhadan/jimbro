@@ -15,11 +15,10 @@
     display: flex;
     height: 100%;
     width: calc(100% / 3);
-    background-color: $yellow;
+    background-color: transparent;
     padding: 8px;
     flex-direction: column;
     gap: 16px;
-    overflow: auto;
 
     input {
         width: 100%;
@@ -40,13 +39,14 @@
 }
 
 .workouts {
-    border: 2px dashed $red;
+    border: 3px solid $red;
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 16px;
     background-color: white;
     gap: 32px;
+    overflow: auto;
 
     .workout-list {
         display: flex;
@@ -58,25 +58,44 @@
         width: 100%;
         padding: 8px 16px;
         background-color: $yellow;
-        box-shadow: inset 8px 8px 0 0 white, 9px 9px 0 0 $yellow;
+        transition: 200ms;
         outline: 0;
-        border: 1px solid $blue;
+        border: 0;
         font: $subheading-font;
         font-weight: 500;
         cursor: pointer;
         color: black;
     }
 
-    .workout-button.add-workout{
-        background-color: $green;
-        box-shadow: inset 8px 8px 0 0 white, 9px 9px 0 0 $green;
-        border: 1px solid $blue;
+    .add-workout {
+        border: 3px solid black;
+        padding: 8px 16px;
+        margin-top: auto;
         color: black;
+        box-shadow: 1px 1px 0px 0px black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
+        font: $subheading-font;
+        font-weight: 700;
+        text-align: center;
+        border-radius: 12px;
+        outline: 0;
+        background-color: $green;
+        cursor: pointer;
+        position: relative;
     }
 
     .workout-button:hover {
-        box-shadow: none;
-        transition: 0.4s;
+        // box-shadow: none;
+        // transition: 0.4s;
+        outline: 0;
+        // background: #f4e603;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+    }
+
+
+    .add-workout:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
     }
 }
 
@@ -98,11 +117,9 @@
     gap: 4px;
     border: 1px solid black;
     padding: 8px;
-    // font: $subheading-font;
     background-color: $yellow;
 
     .weight-info {
-        // width: 100%;
         display: flex;
         gap: 2px;
     }
@@ -116,3 +133,23 @@
     }
 }
 
+.download-button {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: $yellow;
+    transition: 200ms;
+    outline: 0;
+    border: 0;
+    font: $subheading-font;
+    font-weight: 500;
+    cursor: pointer;
+    color: black;
+    margin-top: auto;
+    text-decoration: none;
+    text-align: center;
+}
+
+.download-button:hover {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(256, 256, 256, .2), 0 3px 8px 0 rgba(256, 256, 256, .15);
+}

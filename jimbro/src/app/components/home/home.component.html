@@ -12,7 +12,7 @@
                 Keep track of day-to-day progress
             </li>
             <li>
-                View elementary stats & charts of the data
+                View elementary stats & charts of the data (WIP)
             </li>
         </ul>
         <section class="button-container">
@@ -20,7 +20,7 @@
                 <img src="../../../assets/plus-icon.svg" alt="New Workout Plan">
                 New Plan
             </button>
-            <input type="file" (change)="openExistingPlan($event)" accept=".csv" #fileUpload>
+            <input type="file" (change)="openExistingPlan($event)" accept=".json" #fileUpload>
             <button class="panel" type="button" tabindex="1" (click)="fileUpload.click()">
                 
                 <img src="../../../assets/upload-icon.svg" alt="New Workout Plan">
