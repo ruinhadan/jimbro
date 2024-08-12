@@ -1,5 +1,17 @@
-<div class="root-container">
-    <div class="column">
+<div class="container">
+    <mat-drawer-container class="example-container" autosize>
+        <mat-drawer #drawer class="example-sidenav" mode="side">
+          <p>Auto-resizing sidenav</p>
+        </mat-drawer>
+      
+        <div class="example-sidenav-content">
+          <button type="button" mat-button (click)="drawer.toggle()">
+            Toggle sidenav
+          </button>
+        </div>
+      
+      </mat-drawer-container>
+    <!-- <div class="column">
         <section class="plan-header">
             <input type="text" name="plan-name" id="plan-name" [(ngModel)]="plan.name" placeholder="Plan Name">
         </section>
@@ -77,5 +89,5 @@
             </div>
             <button class="add-workout" (click)="addRecord()">Add Record</button>
         </section>
-    </div>
+    </div> -->
 </div>

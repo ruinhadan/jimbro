@@ -1,20 +1,29 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [MatDividerModule, MatIconModule, MatButtonModule, RouterLink, MatListModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  currentFeaures: string[] = ["Create and manage workout plans", "Keep track of day-to-day progress", "Manage plans using simple JSON files"]
+  WIPFeatures: string[] = ["Login & manage accounts using OAuth", "Manage plans using persistent DB", "View elementary stats & charts of the data"]
+
   constructor(private router: Router) {
 
   }
+
   createNewPlan() {
     this.router.navigate(["/plan"], {state: {name: '', dayCount: 0}})
   }
+
   openExistingPlan(event: Event) {
     const target = event.target as HTMLInputElement;
     const files = target.files;

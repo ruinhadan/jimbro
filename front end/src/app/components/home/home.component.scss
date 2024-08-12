@@ -1,27 +1,17 @@
+@use '@angular/material' as mat;
 @import '../../../styles.scss';
-
-.root-container {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    width: 100%;
-    height: 100%;
-    background-color: $blue;
-    justify-content: center;
-}
 
 .container {
     display: flex;
-    flex-direction: column;
-    width: 50%;
+    flex-flow: row wrap;
+    width: 100%;
     height: 100%;
     padding: 8px;
-    border: 1px solid $blue;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     color: black;
     line-height: 1.5rem;
-    background-color: white;
+    overflow-y: auto;
 }
 
 h2 {
@@ -34,13 +24,13 @@ h2 {
 
 h1 {
     font: $title-font;
-    font-size: 10rem;
-    color: $blue;
+    font-size: 7rem;
+    color: mat.get-color-from-palette($jimbro-primary);
 }
 
 .button-container {
     display: flex;
-    flex-flow: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -49,36 +39,72 @@ h1 {
     margin-bottom: 16px;
 }
 
-.panel {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    padding: 8px 16px;
-    background-color: $yellow;
-    box-shadow: inset 8px 8px 0 0 white, 9px 9px 0 0 $yellow;
-    outline: 0;
-    border: 1px solid $blue;
-    font: $heading-font;
-    cursor: pointer;
-    color: $blue;
-}
-
-.panel:hover {
-    box-shadow: none;
-    transition: 0.4s;
-}
-
 input[type="file"] {
     display: none;
 }
 
-.panel img {
-    height: 24px;
-    width: 24px;
-    padding: 4px;
-    margin-right: 8px;
+.column {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-divider {
+    color: black;
+    height: 100%;
+}
+
+mat-list-item {
+    height: fit-content !important;
+    padding: 4px 0;
+}
+
+[matListItemTitle] {
+    white-space: pre-wrap;
+}
+
+img {
+    height: 50%;
+    width: 50%;
+}
+
+.image-grid {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 840px){
+    .button-container {
+        flex-direction: column;
+    }
+    mat-divider {
+        display: none;
+    }
+    h1 {
+        font-size: 5rem;
+    }
+    .column {
+        width: 100%;
+    }
+    .container {
+        align-items: flex-start;
+    }
+}
+
+@media (600px <= width < 840px) {
+    .button-container {
+        flex-direction: row;
+    }
+}
+
+@media (840px <= width < 1200px) {
+    h1 {
+        font-size: 5rem;
+    }
 }
 
 
