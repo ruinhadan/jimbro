@@ -1,67 +1,71 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Plan } from '../../shared/types';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import { Plan, RightPanel } from '../../shared/types';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
+import { RecordComponent } from "../record/record.component";
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { plans } from '../../shared/dummy_data';
 
 @Component({
   selector: 'app-plan',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, MatButtonModule, MatIconModule, MatDivider, MatInputModule, MatSelectModule, MatFormFieldModule, MatTableModule, RecordComponent, MatDatepickerModule],
   templateUrl: './plan.component.html',
-  styleUrl: './plan.component.scss'
+  styleUrl: './plan.component.scss',
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }, provideNativeDateAdapter()]
 })
 export class PlanComponent {
-  plan: Plan = {name: '', dayCount: 0};
+  plans: Plan[] = [];
+  selectedPlanIndex: number = 0;
   selectedWorkoutIndex: number = 0;
   selectedExerciseIndex: number = 0;
   downloadPlanURI: SafeUrl = '';
   planFilename: string = '';
-
+  displayedColumns = ["name", "actions"]
+  RightPanelDisplay: typeof RightPanel = RightPanel
+  rightPanel = RightPanel.EXERCISEFORM
+  exerciseFormControl: FormControl = new FormControl('');
+  planFormControl: FormControl = new FormControl('');
+  workoutFormControl: FormControl = new FormControl('');
+  exercises = [{name: 'Something'}, {name: 'Something'}, {name: 'Something'}, {name: 'Something'}, {name: 'Something'}]
+  recordFormGroup: FormGroup = new FormGroup(
+    {
+      date: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), Validators.required),
+      weight: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*.?[0-9]*")]),
+      units: new FormControl("kg", Validators.required),
+      sets: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*")]),
+      reps: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*")])
+    }
+  )
   constructor(private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.plan = history.state;
-    this.downloadPlanURI = this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(JSON.stringify(this.plan)))
-    this.planFilename = this.plan.name.split(' ').join('_')+'.json'
-    
-    
+    this.plans = plans;
+    let groupedRecords = [];
+    // this.plans.forEach((plan) => {
+    //   plan.workouts.forEach((workout) => {
+    //     workout.exercises.forEach((exercise) => {
+    //       groupedRecords = [];
+    //       exercise.records.
+    //     })
+    //   })
+    // })
+
   }
 
-  displaySelectedWorkout(index: number) {
-    this.selectedWorkoutIndex = index;
+  createPlan() {
+
   }
-
-  displaySelectedExercise(index: number) {
-    this.selectedExerciseIndex = index;
-  }
-
-  public setPlan(plan: string) {
-    this.plan = JSON.parse(plan);
-}
-
-public addWorkout() {
-    if(this.plan.workouts) this.plan.workouts.push({name: 'New Workout', exerciseCount: 0})
-    else this.plan.workouts = [{name: 'New Workout', exerciseCount: 0}]
-    this.plan.dayCount+=1
-}
-
-public addExercise() {
-    if(this.plan.workouts![this.selectedWorkoutIndex].exercises) this.plan.workouts![this.selectedWorkoutIndex].exercises!.push({name: 'New Exercise'})
-    else this.plan.workouts![this.selectedWorkoutIndex].exercises = [{name:'New Exercise'}]
-    this.plan.workouts![this.selectedWorkoutIndex].exerciseCount+=1
-}
-
-public addRecord() {    
-    if(this.plan.workouts![this.selectedWorkoutIndex].exercises![this.selectedExerciseIndex].records) this.plan.workouts![this.selectedWorkoutIndex].exercises![this.selectedExerciseIndex].records!.push({date: formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), weight: 0, unit: 'kg', sets: 0, reps: 0})
-    else this.plan.workouts![this.selectedWorkoutIndex].exercises![this.selectedExerciseIndex].records = [{date: formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), weight: 0, unit: 'kg', sets: 0, reps: 0}]
-}
-
-public updatePlanFile() {
-  this.downloadPlanURI = this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(JSON.stringify(this.plan)))
-    this.planFilename = this.plan.name.split(' ').join('_')+'.json'
-}
 
 }

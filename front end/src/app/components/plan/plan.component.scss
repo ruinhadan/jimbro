@@ -1,155 +1,148 @@
+@use '@angular/material' as mat;
 @import '../../../styles.scss';
 
-.root-container {
+.container {
     display: flex;
     flex-direction: row;
-    gap: 16px;
-    padding: 8px;
     width: 100%;
     height: 100%;
-    background-color: $blue;
-    justify-content: center;
+    padding: 8px;
+    align-items: center;
+    justify-content: space-around;
+    color: black;
+    line-height: 1.5rem;
+}
+
+mat-divider {
+    color: black;
+    height: 100%;
 }
 
 .column {
     display: flex;
     height: 100%;
-    width: calc(100% / 3);
+    width: 45%;
     background-color: transparent;
     padding: 8px;
     flex-direction: column;
     gap: 16px;
+    align-items: center;
 
-    input {
+    .selection {
         width: 100%;
-        height: 2rem;
-        padding: 8px;
-    }
-
-    .plan-header {
         display: flex;
-        flex-direction: column;
-        width: 100%;
+        gap: 2rem;  
+        justify-content: center;
 
-        label {
-            font-weight: 300;
-            font-size: 0.75rem;
+        .select-group {
+            width: 40%;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            
+            button {
+                height: 3rem;
+                width: 3rem;
+            }
+
+            mat-form-field {
+                height: 3rem;
+                mat-select {
+                        
+                    font-size: 1rem;
+                    line-height: 1rem;
+                }
+            }
         }
     }
 }
 
-.workouts {
-    border: 3px solid $red;
+.exercise-container {
+    height: 80%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.exercise-operations {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+
+    button[mat-fab] {
+        height: 36px;
+        width: 36px;
+    }
+}
+
+button[mat-stroked-button], button[mat-fab] {
+    &.add {
+        border-color: mat.get-color-from-palette($jimbro-success);
+        color: mat.get-color-from-palette($jimbro-success);
+    }
+
+    &.view {
+        border-color: mat.get-color-from-palette($jimbro-primary);
+        color: mat.get-color-from-palette($jimbro-primary);
+    }
+
+    &.delete {
+        background-color: white;
+        border: 1px solid mat.get-color-from-palette($jimbro-warn);
+        color: mat.get-color-from-palette($jimbro-warn);
+        box-shadow: none;
+    }
+
+}
+
+.how-to {
     display: flex;
     flex-direction: column;
+    line-height: 1.5rem;
+    gap: 8px;
+    height: 100%;
+    justify-content: center;
+    h2 {
+        align-self: center;
+    }
+}
+
+.single-field-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     width: 100%;
-    padding: 16px;
-    background-color: white;
-    gap: 32px;
-    overflow: auto;
-
-    .workout-list {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .workout-button {
-        width: 100%;
-        padding: 8px 16px;
-        background-color: $yellow;
-        transition: 200ms;
-        outline: 0;
-        border: 0;
-        font: $subheading-font;
-        font-weight: 500;
-        cursor: pointer;
-        color: black;
-    }
-
-    .add-workout {
-        border: 3px solid black;
-        padding: 8px 16px;
-        margin-top: auto;
-        color: black;
-        box-shadow: 1px 1px 0px 0px black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
-        font: $subheading-font;
-        font-weight: 700;
-        text-align: center;
-        border-radius: 12px;
-        outline: 0;
-        background-color: $green;
-        cursor: pointer;
-        position: relative;
-    }
-
-    .workout-button:hover {
-        // box-shadow: none;
-        // transition: 0.4s;
-        outline: 0;
-        // background: #f4e603;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
-    }
-
-
-    .add-workout:active {
-        box-shadow: 0px 0px 0px 0px;
-        top: 5px;
-        left: 5px;
-    }
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
 }
 
-.workout-header {
-    font: $heading-font;
-    text-align: center;
+.multi-field-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
 }
 
-.empty-column-header {
-    border: 2px dashed white;
-    background-color: $red;
-    padding: 8px;
-    color: white;
+app-record {
+    width: 100%;
 }
 
-.record {
+.record-details {
     width: 100%;
     display: flex;
-    gap: 4px;
-    border: 1px solid black;
-    padding: 8px;
-    background-color: $yellow;
+    gap: .5rem;
+    justify-content: center;
 
-    .weight-info {
-        display: flex;
-        gap: 2px;
+    mat-form-field {
+        width: fit-content;
     }
-
-    label:nth-of-type(1) {
-        width: 30%;
-    }
-
-    label:nth-last-child(-n + 2) {
-        width: 30%;
-    }
-}
-
-.download-button {
-    width: 100%;
-    padding: 8px 16px;
-    background-color: $yellow;
-    transition: 200ms;
-    outline: 0;
-    border: 0;
-    font: $subheading-font;
-    font-weight: 500;
-    cursor: pointer;
-    color: black;
-    margin-top: auto;
-    text-decoration: none;
-    text-align: center;
-}
-
-.download-button:hover {
-    outline: 0;
-    box-shadow: 0 0 0 2px rgba(256, 256, 256, .2), 0 3px 8px 0 rgba(256, 256, 256, .15);
 }

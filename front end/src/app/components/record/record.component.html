@@ -1,0 +1,27 @@
+<div class="records-root-container">
+    @for (date of dateList; track date) {
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>{{ date }}</mat-card-title>
+              </mat-card-header>
+               
+            <mat-card-content class="record-container">
+                @for (record of records[date]; track record) {
+                    <div class="record">
+                        {{record.weight}}{{record.units}} - {{record.sets}} x {{record.reps}}
+                    </div>
+                }
+                <div class="record-actions">
+                    <button mat-icon-button aria-label="Delete Button" class="delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                      <button mat-icon-button aria-label="Edit Button" class="edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                </div>
+            </mat-card-content>
+          </mat-card>
+    }
+</div>
+
+

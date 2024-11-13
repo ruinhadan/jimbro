@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
+.record-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.records-root-container {
+    display: flex;
+    width: 100%;
+    gap: .5rem;
+}
+
+.record-actions {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button[mat-icon-button] {
+    &.delete {
+        color: mat.get-color-from-palette($jimbro-warn);
+        box-shadow: none;
+    }
+
+    &.edit {
+        color: mat.get-color-from-palette($jimbro-primary);
+        box-shadow: none;
+    }
+}
+
+mat-card {
+    border-color: mat.get-color-from-palette($jimbro-accent);
+}
