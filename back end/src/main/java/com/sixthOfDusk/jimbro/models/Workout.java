@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +23,11 @@ public class Workout {
 
     private String name;
 
-     
-    private int exerciseCount = 0; 
-
     
     @OneToMany
     private List<Record> records = new ArrayList<Record>();
 
     
-    @OneToMany
+    @ManyToMany
     private List<Exercise> exercises = new ArrayList<Exercise>();
 }
