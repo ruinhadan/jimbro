@@ -1,29 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ExerciseDTO, PlanDTO, WorkoutDTO } from '../shared/types';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
-  exerciseList: ExerciseDTO[] = []
-  planList: PlanDTO[] = []  
 
-  constructor(private httpClient: HttpClient) { 
-    this.httpClient.get(`${environment.backendURL}/plans`)
+  constructor(private httpClient: HttpClient) {
   }
 
-  getAllPlans() {
-    this.httpClient.get(`${environment.backendURL}/plans`).subscribe(
-      (plans) => {return plans;}
-    )
+  fetchAllPlans(){
+    return this.httpClient.get<PlanDTO[]>(`${environment.backendURL}/plans`);
   }
 
-  getWorkoutsForPlan(plan: PlanDTO) {
-    this.httpClient.get(`${environment.backendURL}/plans/${plan.id}/workouts`).subscribe(
-      (workouts) => {return workouts;}
-    )
+  fetchWorkoutsForPlan(plan: PlanDTO) {
+    return this.httpClient.get<WorkoutDTO[]>(`${environment.backendURL}/plans/${plan.id}/workouts`);
   }
+
+  
 
 }

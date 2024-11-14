@@ -4,9 +4,9 @@
       <div class="select-group">
         <mat-form-field>
           <mat-label>Plan</mat-label>
-          <mat-select [(value)]="selectedPlanIndex" [disabled]="plans.length == 0">
+          <mat-select [(value)]="selectedPlan" [disabled]="plans.length === 0" (selectionChange)="changePlan()">
             @for (plan of plans; track plan; let index = $index) {
-            <mat-option [value]="index">{{ plan.name }}</mat-option>
+            <mat-option [value]="plan">{{ plan.name }}</mat-option>
             }
             @empty {
             <mat-option>Please create a plan</mat-option>
@@ -17,13 +17,13 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div class="select-group" *ngIf="plans.length > 0">
+      <div class="select-group" *ngIf="selectedPlan">
         <mat-form-field>
           <mat-label>Workout</mat-label>
-          <mat-select [(value)]="selectedWorkoutIndex"
-            [disabled]="!plans[selectedPlanIndex].workouts || plans[selectedPlanIndex].workouts.length == 0">
-            @for (workout of plans[selectedPlanIndex].workouts; track workout; let index = $index) {
-            <mat-option [value]="index">{{ workout.name }}</mat-option>
+          <mat-select [(value)]="selectedWorkout"
+            [disabled]="workouts.length == 0">
+            @for (workout of workouts; track workout; let index = $index) {
+            <mat-option [value]="workout">{{ workout.name }}</mat-option>
             }
             @empty {
             <mat-option>Please create a plan</mat-option>
@@ -35,14 +35,8 @@
         </button>
       </div>
     </div>
-    <div class="exercise-container">
-      <table mat-table *ngIf="plans[selectedPlanIndex].workouts.length > 0" [dataSource]="plans[selectedPlanIndex].workouts[selectedWorkoutIndex].exercises">
-
-        <!-- <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef>No.</th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container> -->
-
+    <div class="exercise-container" *ngIf="selectedWorkout">
+      <table mat-table [dataSource]="selectedWorkout.exercises">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -60,16 +54,15 @@
             </div>
           </td>
         </ng-container>
-
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-
+      
     </div>
-    <button mat-fab extended>
+    <button mat-fab extended *ngIf="selectedPlan && selectedWorkout">
       <mat-icon>add</mat-icon>
       Add Exercise
     </button>
+    
   </div>
   <mat-divider [vertical]="true"></mat-divider>
   <div class="column">
@@ -142,8 +135,6 @@
           <input matInput type="text" formControlName="reps">
         </mat-form-field>
       </div>
-      
-        <!-- <button mat-stroked-button class="add">Add Record</button> -->
         <button mat-stroked-button class="add">Save</button>
     </div>
     <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS"></app-record>

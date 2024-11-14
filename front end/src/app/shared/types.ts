@@ -1,27 +1,30 @@
 export type Plan = {
+    id: string,
     name: string,
     dayCount: number,
     workouts: Workout[]
 }
 
 export type Workout = {
+    id: string,
     name: string,
-    exerciseCount: number,
-    exercises: Exercise[]
+    exercises: Exercise[],
+    records: Record[]
 }
 
 export type Exercise = {
-    name: string,
-    records?: Record[]
+    id: string,
+    name: string
 }
 
 export type Record = {
+    id: string,
+    exercise: Exercise,
     date: string,
     weight: number,
-    unit: string,
+    unit: Unit,
     sets: number,
-    reps: number,
-    eVal?: number
+    reps: number
 }
 
 export type ExerciseDTO = {
@@ -31,8 +34,7 @@ export type ExerciseDTO = {
 
 export type PlanDTO = {
     id: string,
-    name: string,
-    workouts: WorkoutDTO[]
+    name: string
 }
 
 export type WorkoutDTO = {
