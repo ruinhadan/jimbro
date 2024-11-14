@@ -1,9 +1,11 @@
 package com.sixthOfDusk.jimbro.repositories;
+
 import java.util.UUID;
 
 import org.springframework.data.repository.ListCrudRepository;
 
-import com.sixthOfDusk.jimbro.models.Exercise;
+import com.sixthOfDusk.jimbro.models.Record;
 
-public interface ExerciseRepository extends ListCrudRepository<Exercise, UUID>{
+public interface RecordRepository extends ListCrudRepository<Record, UUID>{
+    
 }

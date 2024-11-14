@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Workout {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
 
     private String name;
 
