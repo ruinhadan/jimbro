@@ -30,6 +30,7 @@ import com.sixthOfDusk.jimbro.models.Workout;
 import com.sixthOfDusk.jimbro.models.WorkoutDTO;
 import com.sixthOfDusk.jimbro.repositories.ExerciseRepository;
 import com.sixthOfDusk.jimbro.repositories.PlanRepository;
+import com.sixthOfDusk.jimbro.repositories.RecordRepository;
 import com.sixthOfDusk.jimbro.repositories.WorkoutRepository;
 
 @RestController
@@ -39,11 +40,13 @@ public class PlanController {
     private PlanRepository planRepository;
     private WorkoutRepository workoutRepository;
     private ExerciseRepository exerciseRepository;
+    private RecordRepository recordRepository;
 
-    public PlanController(PlanRepository planRepository, WorkoutRepository workoutRepository, ExerciseRepository exerciseRepository) {
+    public PlanController(PlanRepository planRepository, WorkoutRepository workoutRepository, ExerciseRepository exerciseRepository, RecordRepository recordRepository) {
         this.planRepository = planRepository;
         this.workoutRepository = workoutRepository;
         this.exerciseRepository = exerciseRepository;
+        this.recordRepository = recordRepository;
     }
     
     @ResponseStatus(HttpStatus.OK)
@@ -92,7 +95,16 @@ public class PlanController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/workouts/{workoutId}/exercises/{exerciseId}/records")
     public ResponseEntity<List<RecordDTO>> getRecordsForExercise(@PathVariable long workoutId, @PathVariable long exerciseId) {
+        System.out.println(workoutId);
+        System.out.println(exerciseId);
         return ResponseEntity.ok(workoutRepository.findRecordsForExercise(workoutId, exerciseId));
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("/workouts/{workoutId}/exercises/{exerciseId}/records")
+    public void addRecordToWorkout(@PathVariable long workoutId, @PathVariable long exerciseId, @RequestBody Record record) {
+        recordRepository.save(record);
+        workoutRepository.addRecordToWorkout(record.getId(), workoutId);
     }
     
     @ResponseStatus(HttpStatus.OK)

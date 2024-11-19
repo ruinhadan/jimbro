@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl,
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
-import { ExerciseDTO, Plan, PlanDTO, Record, RecordDTO, RightPanel, WorkoutDTO } from '../../shared/types';
+import { Exercise, Plan, PlanDTO, Record, RecordDTO, RightPanel, WorkoutDTO } from '../../shared/types';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,21 +30,22 @@ export class PlanComponent {
   selectedPlan: PlanDTO | undefined;
   workouts: WorkoutDTO[] = [];
   selectedWorkout: WorkoutDTO | undefined;
-  workoutExercises: ExerciseDTO[] = [];
-  availableExercises: ExerciseDTO[] = [];
+  workoutExercises: Exercise[] = [];
+  availableExercises: Exercise[] = [];
   displayedColumns = ["name", "actions"]
   RightPanelDisplay: typeof RightPanel = RightPanel
   rightPanel = RightPanel.HOWTO
   exerciseFormControl: FormControl = new FormControl('');
   planFormControl: FormControl = new FormControl('');
   workoutFormControl: FormControl = new FormControl('');
-  exercises: ExerciseDTO[] = [];
+  exercises: Exercise[] = [];
+  selectedExercise: Exercise | undefined;
   records: RecordDTO[] = [];
   recordFormGroup: FormGroup = new FormGroup(
     {
-      date: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), Validators.required),
+      date: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), [Validators.required]),
       weight: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*.?[0-9]*")]),
-      units: new FormControl("kg", Validators.required),
+      unit: new FormControl(0, [Validators.required, Validators.pattern("[01]?")]),
       sets: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*")]),
       reps: new FormControl(0, [Validators.required, Validators.pattern("[0-9]*")])
     }
@@ -69,18 +70,20 @@ export class PlanComponent {
     this.rightPanel = this.RightPanelDisplay.EXERCISEFORM;
   }
 
-  openRecordForm() {
+  openRecordForm(exercise: Exercise) {
+    this.selectedExercise = exercise;
     this.rightPanel = this.RightPanelDisplay.RECORDFORM;
   }
 
-  openRecordList(exercise: ExerciseDTO) {
+  openRecordList(exercise: Exercise) {
     this.getRecordsForExercise(exercise);
     this.rightPanel = this.RightPanelDisplay.RECORDS;
   }
 
-  getRecordsForExercise(exercise: ExerciseDTO) {
+  getRecordsForExercise(exercise: Exercise) {
+    console.log(this.selectedWorkout, exercise)
     this.backendService.fetchRecordsForExercise(this.selectedWorkout!, exercise).subscribe({
-      next: (records: RecordDTO[]) => { this.records = records;},
+      next: (records: RecordDTO[]) => {console.log(records); this.records = records;},
       error: (error: Error) => {console.log(error)}
     })
   }
@@ -96,7 +99,7 @@ export class PlanComponent {
 
   getAllExercises() {
     this.backendService.fetchAllExercises().subscribe({
-      next: (exercises: ExerciseDTO[]) => {this.exercises = exercises;},
+      next: (exercises: Exercise[]) => {this.exercises = exercises;},
       error: (error: Error) => {console.log(error);}
     })
   }
@@ -113,7 +116,7 @@ export class PlanComponent {
   changeWorkout() {
     this.backendService.fetchExercisesForWorkout(this.selectedWorkout!).subscribe(
       {
-        next: (exercises: ExerciseDTO[]) => {
+        next: (exercises: Exercise[]) => {
           this.workoutExercises = exercises; 
           const existingExercises = new Set(this.workoutExercises.map((exercise) => exercise.id));
           this.availableExercises = this.exercises.filter((exercise) => !existingExercises.has(exercise.id));
@@ -148,4 +151,13 @@ export class PlanComponent {
     })
   }
 
+  addRecordToWorkout() {
+    if(this.recordFormGroup.valid) {
+      this.backendService.addRecordToWorkout(this.selectedWorkout!, this.selectedExercise!, this.recordFormGroup.value).subscribe({
+        next: () => {alert("Record added successfully!")},
+        error: (error: Error) => console.log(error)
+      })
+    }
+    
+  }
 }

@@ -46,7 +46,7 @@
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
             <div class="exercise-operations">
-              <button mat-fab class="add" (click)="openRecordForm()"><mat-icon>add</mat-icon></button>
+              <button mat-fab class="add" (click)="openRecordForm(element)"><mat-icon>add</mat-icon></button>
               <button mat-fab class="view" (click)="openRecordList(element)"><mat-icon>visibility</mat-icon></button>
               <button mat-fab aria-label="Delete Button" class="delete">
                 <mat-icon>delete</mat-icon>
@@ -131,10 +131,10 @@
           <input matInput type="text" formControlName="weight">
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Units</mat-label>
-          <mat-select formControlName="units">
-            <mat-option value="kg">kg</mat-option>
-            <mat-option value="lb">lb</mat-option>
+          <mat-label>Unit</mat-label>
+          <mat-select formControlName="unit">
+            <mat-option value=0>kg</mat-option>
+            <mat-option value=1>lbs</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -146,7 +146,7 @@
           <input matInput type="text" formControlName="reps">
         </mat-form-field>
       </div>
-        <button mat-stroked-button class="add">Save</button>
+        <button mat-stroked-button class="add" (click)="addRecordToWorkout()">Save</button>
     </div>
     <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records"></app-record>
   </div>

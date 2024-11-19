@@ -5,5 +5,5 @@ import org.springframework.data.repository.ListCrudRepository;
 
 import com.sixthOfDusk.jimbro.models.Exercise;
 
-public interface ExerciseRepository extends ListCrudRepository<Exercise, UUID>{
+public interface ExerciseRepository extends ListCrudRepository<Exercise, Long>{
 }

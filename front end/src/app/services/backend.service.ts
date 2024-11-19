@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { ExerciseDTO, PlanDTO, Record, RecordDTO, WorkoutDTO } from '../shared/types';
+import { Exercise, PlanDTO, Record, RecordDTO, WorkoutDTO } from '../shared/types';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -21,7 +21,7 @@ export class BackendService {
   }
 
   fetchExercisesForWorkout(workout: WorkoutDTO) {
-    return this.httpClient.get<ExerciseDTO[]>(`${environment.backendURL}/workouts/${workout.id}/exercises`);
+    return this.httpClient.get<Exercise[]>(`${environment.backendURL}/workouts/${workout.id}/exercises`);
   }
 
   createPlan(planName: string) {
@@ -38,16 +38,21 @@ export class BackendService {
     return this.httpClient.post(`${environment.backendURL}/plans/${plan.id}/workouts`, requuestBody);
   }
 
-  addExerciseToWorkout(workout: WorkoutDTO, exercise: ExerciseDTO) {
+  addExerciseToWorkout(workout: WorkoutDTO, exercise: Exercise) {
     return this.httpClient.post(`${environment.backendURL}/workouts/${workout.id}/exercises`, exercise)
   }
 
   fetchAllExercises() {
-    return this.httpClient.get<ExerciseDTO[]>(`${environment.backendURL}/exercises`);
+    return this.httpClient.get<Exercise[]>(`${environment.backendURL}/exercises`);
   }
 
-  fetchRecordsForExercise(exercise: ExerciseDTO, workout: WorkoutDTO) {
+  fetchRecordsForExercise(workout: WorkoutDTO, exercise: Exercise) {
     return this.httpClient.get<RecordDTO[]>(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records`);
+  }
+
+  addRecordToWorkout(workout: WorkoutDTO, exercise: Exercise, record: any) {
+    record.exercise = exercise
+    return this.httpClient.post(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records`, record)
   }
 
 }

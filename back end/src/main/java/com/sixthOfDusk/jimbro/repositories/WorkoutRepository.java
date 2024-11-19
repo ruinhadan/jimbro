@@ -28,4 +28,8 @@ public interface WorkoutRepository extends ListCrudRepository<Workout, Long>{
 
     @Query(value = "select reps, sets, unit, weight, date, id from record join workout_records on record.id = workout_records.records_id where record.exercise_id = ?2 and workout_records.workout_id = ?1 order by date desc", nativeQuery = true)
     public List<RecordDTO> findRecordsForExercise(long workoutId, long exerciseId);
+
+    @Modifying
+    @Query(value = "insert into workout_records values (?1, ?2)", nativeQuery = true)
+    public void addRecordToWorkout(long recordId, long workoutId);
 }
