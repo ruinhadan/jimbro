@@ -1,7 +1,7 @@
-INSERT INTO EXERCISE VALUES (0, 'Bench Press'), (1, 'Machine Shoulder Press'), (2, 'Leg Press'), (3, 'Lat Pulldown');
-INSERT INTO PLAN VALUES (0, 'PPL'), (1, 'UL');
-INSERT INTO WORKOUT VALUES (0, 'Push 1'), (1, 'Pull 1'), (2, 'Upper 1'), (3, 'Lower 1');
-INSERT INTO WORKOUT_EXERCISES VALUES (0, 0), (0, 2), (1, 0), (1, 2), (2, 3), (3, 1), (3, 2);
-INSERT INTO PLAN_WORKOUTS VALUES (0, 0), (0, 1), (1, 2), (1, 3);
-INSERT INTO RECORD VALUES (12, 2, 0, 15, '2024-01-10', 0, 0), (8, 1, 0, 20, '2024-01-10', 0, 1);
-INSERT INTO WORKOUT_RECORDS VALUES (0, 0), (1, 0);
+INSERT INTO EXERCISE VALUES (99, 'Bench Press'), (98, 'Machine Shoulder Press'), (97, 'Leg Press'), (96, 'Lat Pulldown');
+INSERT INTO PLAN VALUES (99, 'PPL'), (98, 'UL');
+INSERT INTO WORKOUT VALUES (99, 'Push 98'), (98, 'Pull 98'), (97, 'Upper 98'), (96, 'Lower 98');
+INSERT INTO WORKOUT_EXERCISES VALUES (99, 99), (99, 97), (98, 99), (98, 97), (97, 96), (96, 98), (96, 97);
+INSERT INTO PLAN_WORKOUTS VALUES (99, 99), (99, 98), (98, 97), (98, 96);
+INSERT INTO RECORD VALUES (12, 2, 0, 15, '2024-01-10', 99, 99), (8, 2, 0, 20, '2024-01-10', 99, 98), (12, 2, 1, 135, '2024-01-11', 99, 97);
+INSERT INTO WORKOUT_RECORDS VALUES (99, 99), (98, 99), (97, 99);

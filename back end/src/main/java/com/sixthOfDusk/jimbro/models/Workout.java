@@ -1,7 +1,9 @@
 package com.sixthOfDusk.jimbro.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -29,5 +31,5 @@ public class Workout {
 
     
     @ManyToMany
-    private List<Exercise> exercises = new ArrayList<Exercise>();
+    private Set<Exercise> exercises = new HashSet<Exercise>();
 }
