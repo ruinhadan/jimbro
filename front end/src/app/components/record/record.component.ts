@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { Record, RecordDTO, Unit } from '../../shared/types';
+import { MatTableModule } from '@angular/material/table';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-record',
@@ -10,17 +13,31 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './record.component.html',
   styleUrl: './record.component.scss'
 })
-export class RecordComponent {
-  records: {[date: string]: {weight: number, units: string, sets: number, reps: number}[]} = {
-    ['22-07-2024']: [
-      {weight: 10, units: 'kg', sets: 2, reps: 10},
-      {weight: 15, units: 'kg', sets: 2, reps: 10}
-    ],
-    ['23-07-2024']: [
-      {weight: 10, units: 'kg', sets: 2, reps: 10},
-      {weight: 15, units: 'kg', sets: 1, reps: 10}
-    ]
+export class RecordComponent implements OnChanges{
+  @Input() records: RecordDTO[] = [];
+  Unit = Unit
+  recordsMap = new Map<string, RecordDTO[]>()
+  displayedColumns = ["record", "actions"]
+
+  formatDate(date: Date) {
+    const tempDate = new Date(date);
+    return `${tempDate.getFullYear()}/${tempDate.getMonth() + 1}/${tempDate.getDate()}`
   }
 
-  dateList = Object.keys(this.records);
+  ngOnChanges() {
+    this.recordsMap.clear();
+    this.records.forEach((record) => {
+      const key = this.formatDate(record.date)
+      let curRecords = this.recordsMap.get(key); 
+      if (curRecords)
+        curRecords.push(record)
+      else
+        curRecords = [record]
+      
+      this.recordsMap.set(key, curRecords)
+    })
+
+  }
+
+  
 }

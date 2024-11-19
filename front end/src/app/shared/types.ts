@@ -19,10 +19,9 @@ export type Exercise = {
 
 export type Record = {
     id: string,
-    exercise: Exercise,
     date: string,
     weight: number,
-    unit: Unit,
+    unit: string,
     sets: number,
     reps: number
 }
@@ -39,15 +38,12 @@ export type PlanDTO = {
 
 export type WorkoutDTO = {
     id: string,
-    name: string,
-    exercises: ExerciseDTO[],
-    records: RecordDTO[]
+    name: string
 }
 
-export enum Unit {
-    KG,
-    LBS
-}
+export const Unit = new Map()
+Unit.set(0, "kg")
+Unit.set(1, "lbs")
 
 export type RecordDTO = {
     id: string,
@@ -55,8 +51,7 @@ export type RecordDTO = {
     sets: number,
     weight: number,
     date: Date,
-    exercise: ExerciseDTO,
-    unit: Unit
+    unit: number
 }
 
 export enum RightPanel {

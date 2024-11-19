@@ -1,16 +1,42 @@
 <div class="records-root-container">
-    @for (date of dateList; track date) {
-        <mat-card appearance="outlined">
+    @for (date of recordsMap.keys(); track date) {
+        <mat-card appearance ="outlined" class="records">
             <mat-card-header>
                 <mat-card-title>{{ date }}</mat-card-title>
               </mat-card-header>
-               
             <mat-card-content class="record-container">
-                @for (record of records[date]; track record) {
+                @for (record of recordsMap.get(date); track record) {
                     <div class="record">
-                        {{record.weight}}{{record.units}} - {{record.sets}} x {{record.reps}}
+                      <div class="data">
+                        {{record.weight}}{{Unit.get(record.unit)}} - {{record.sets}} x {{record.reps}}
+
+                      </div>
+                        
+                        <div class="actions">
+                          <button mat-icon-button aria-label="Delete Button" class="delete">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label="Edit Button" class="edit">
+                              <mat-icon>edit</mat-icon>
+                            </button>
+                      </div>
                     </div>
+                    
                 }
+                
+            </mat-card-content>
+          </mat-card>
+    }
+
+        <!-- <table mat-table [dataSource]="records">
+          <ng-container matColumnDef="record">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let record"> {{formatDate(record.date)}} &emsp; {{record.weight}}{{Unit.get(record.unit)}} - {{record.sets}} x {{record.reps}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let record">
                 <div class="record-actions">
                     <button mat-icon-button aria-label="Delete Button" class="delete">
                         <mat-icon>delete</mat-icon>
@@ -19,9 +45,11 @@
                         <mat-icon>edit</mat-icon>
                       </button>
                 </div>
-            </mat-card-content>
-          </mat-card>
-    }
+            </td>
+          </ng-container>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table> -->
+
 </div>
 
 

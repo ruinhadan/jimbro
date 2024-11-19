@@ -4,7 +4,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl,
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
-import { ExerciseDTO, Plan, PlanDTO, RightPanel, WorkoutDTO } from '../../shared/types';
+import { ExerciseDTO, Plan, PlanDTO, Record, RecordDTO, RightPanel, WorkoutDTO } from '../../shared/types';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,15 +30,16 @@ export class PlanComponent {
   selectedPlan: PlanDTO | undefined;
   workouts: WorkoutDTO[] = [];
   selectedWorkout: WorkoutDTO | undefined;
-  downloadPlanURI: SafeUrl = '';
-  planFilename: string = '';
+  workoutExercises: ExerciseDTO[] = [];
+  availableExercises: ExerciseDTO[] = [];
   displayedColumns = ["name", "actions"]
   RightPanelDisplay: typeof RightPanel = RightPanel
-  rightPanel = RightPanel.EXERCISEFORM
+  rightPanel = RightPanel.HOWTO
   exerciseFormControl: FormControl = new FormControl('');
   planFormControl: FormControl = new FormControl('');
   workoutFormControl: FormControl = new FormControl('');
-  exercises = [{ name: 'Something' }, { name: 'Something' }, { name: 'Something' }, { name: 'Something' }, { name: 'Something' }]
+  exercises: ExerciseDTO[] = [];
+  records: RecordDTO[] = [];
   recordFormGroup: FormGroup = new FormGroup(
     {
       date: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en_IN'), Validators.required),
@@ -52,6 +53,40 @@ export class PlanComponent {
   }
 
   ngOnInit(): void {
+    this.getAllPlans();
+    this.getAllExercises();
+  }
+
+  openPlanForm() {
+    this.rightPanel = this.RightPanelDisplay.PLANFORM;
+  }
+
+  openWorkoutForm() {
+    this.rightPanel = this.RightPanelDisplay.WORKOUTFORM;
+  }
+
+  openExerciseForm() {
+    this.rightPanel = this.RightPanelDisplay.EXERCISEFORM;
+  }
+
+  openRecordForm() {
+    this.rightPanel = this.RightPanelDisplay.RECORDFORM;
+  }
+
+  openRecordList(exercise: ExerciseDTO) {
+    this.getRecordsForExercise(exercise);
+    this.rightPanel = this.RightPanelDisplay.RECORDS;
+  }
+
+  getRecordsForExercise(exercise: ExerciseDTO) {
+    this.backendService.fetchRecordsForExercise(this.selectedWorkout!, exercise).subscribe({
+      next: (records: RecordDTO[]) => { this.records = records;},
+      error: (error: Error) => {console.log(error)}
+    })
+  }
+
+  getAllPlans() {
+    this.selectedPlan = undefined;
     this.backendService.fetchAllPlans().subscribe({
       next: (plans: PlanDTO[]) => { this.plans = plans; },
       error: (error: Error) => { console.log(error); }
@@ -59,8 +94,11 @@ export class PlanComponent {
     )
   }
 
-  createPlan() {
-
+  getAllExercises() {
+    this.backendService.fetchAllExercises().subscribe({
+      next: (exercises: ExerciseDTO[]) => {this.exercises = exercises;},
+      error: (error: Error) => {console.log(error);}
+    })
   }
 
   changePlan() {
@@ -70,6 +108,44 @@ export class PlanComponent {
       error: (error: Error) => { console.log(error); }
     }
     )
+  }
+
+  changeWorkout() {
+    this.backendService.fetchExercisesForWorkout(this.selectedWorkout!).subscribe(
+      {
+        next: (exercises: ExerciseDTO[]) => {
+          this.workoutExercises = exercises; 
+          const existingExercises = new Set(this.workoutExercises.map((exercise) => exercise.id));
+          this.availableExercises = this.exercises.filter((exercise) => !existingExercises.has(exercise.id));
+        },
+        error: (error: Error) => {console.log(error);}
+      }
+    )
+  }
+
+  createPlan() {
+    this.backendService.createPlan(this.planFormControl.value).subscribe(
+      {
+        next: () => {alert("Created plan successfully"); this.getAllPlans();},
+        error: (error: Error) => {console.log(error)}
+      }
+    )
+  }
+
+  createWorkout() {
+    this.backendService.createWorkout(this.selectedPlan!, this.workoutFormControl.value).subscribe(
+      {
+        next: () => {alert("Created workout successfully"); this.changePlan();},
+        error: (error: Error) => {console.log(error)}
+      }
+    )
+  }
+
+  addExerciseToWorkout() {
+    this.backendService.addExerciseToWorkout(this.selectedWorkout!, this.exerciseFormControl.value).subscribe({
+      next: () => {alert("Added exercise to workout successfully"); this.changeWorkout();},
+      error: (error: Error) => {console.log(error);}
+    })
   }
 
 }

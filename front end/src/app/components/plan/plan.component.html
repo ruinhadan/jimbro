@@ -13,7 +13,7 @@
             }
           </mat-select>
         </mat-form-field>
-        <button mat-fab (click)="createPlan()">
+        <button mat-fab class="add" (click)="openPlanForm()">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -21,7 +21,7 @@
         <mat-form-field>
           <mat-label>Workout</mat-label>
           <mat-select [(value)]="selectedWorkout"
-            [disabled]="workouts.length == 0">
+            [disabled]="workouts.length == 0" (selectionChange)="changeWorkout()">
             @for (workout of workouts; track workout; let index = $index) {
             <mat-option [value]="workout">{{ workout.name }}</mat-option>
             }
@@ -30,13 +30,13 @@
             }
           </mat-select>
         </mat-form-field>
-        <button mat-fab (click)="createPlan()">
+        <button mat-fab class="add" (click)="openWorkoutForm()">
           <mat-icon>add</mat-icon>
         </button>
       </div>
     </div>
     <div class="exercise-container" *ngIf="selectedWorkout">
-      <table mat-table [dataSource]="selectedWorkout.exercises">
+      <table mat-table [dataSource]="workoutExercises">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -44,10 +44,10 @@
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="">
+          <td mat-cell *matCellDef="let element">
             <div class="exercise-operations">
-              <button mat-stroked-button class="add">Add Record</button>
-              <button mat-stroked-button class="view">View Records</button>
+              <button mat-fab class="add" (click)="openRecordForm()"><mat-icon>add</mat-icon></button>
+              <button mat-fab class="view" (click)="openRecordList(element)"><mat-icon>visibility</mat-icon></button>
               <button mat-fab aria-label="Delete Button" class="delete">
                 <mat-icon>delete</mat-icon>
               </button>
@@ -58,10 +58,21 @@
       </table>
       
     </div>
-    <button mat-fab extended *ngIf="selectedPlan && selectedWorkout">
-      <mat-icon>add</mat-icon>
-      Add Exercise
-    </button>
+    <div class="footer-buttons">
+      <button mat-fab extended class="add" *ngIf="selectedPlan && selectedWorkout" (click)="openExerciseForm()">
+        <mat-icon>add</mat-icon>
+        Add Exercise
+      </button>
+      <button mat-fab extended class="delete" *ngIf="selectedPlan">
+        <mat-icon>delete</mat-icon>
+        Delete Plan
+      </button>
+      <button mat-fab extended class="delete" *ngIf="selectedPlan && selectedWorkout">
+        <mat-icon>delete</mat-icon>
+        Delete Workout
+      </button>
+    </div>
+    
     
   </div>
   <mat-divider [vertical]="true"></mat-divider>
@@ -83,12 +94,12 @@
         <mat-form-field>
           <mat-label>Exercises</mat-label>
           <mat-select [formControl]="exerciseFormControl">
-            @for (exercise of exercises; track exercise; let index = $index) {
-            <mat-option [value]="index">{{ exercise.name }}</mat-option>
+            @for (exercise of availableExercises; track exercise; let index = $index) {
+            <mat-option [value]="exercise">{{ exercise.name }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
-        <button mat-stroked-button class="add">Add to Workout</button>
+        <button mat-stroked-button class="add" (click)="addExerciseToWorkout()" [disabled]="availableExercises.length === 0">Add to Workout</button>
     </div>
     <div class="single-field-form" *ngIf="rightPanel === RightPanelDisplay.PLANFORM">
       <h2>Create Plan</h2>
@@ -96,7 +107,7 @@
         <mat-label>Plan Name</mat-label>
         <input matInput type="text" [formControl]="planFormControl">
       </mat-form-field>
-        <button mat-stroked-button class="add">Create</button>
+        <button mat-stroked-button class="add" (click)="createPlan()">Create</button>
     </div>
     <div class="single-field-form" *ngIf="rightPanel === RightPanelDisplay.WORKOUTFORM">
       <h2>Create Workout</h2>
@@ -104,7 +115,7 @@
         <mat-label>Workout Name</mat-label>
         <input matInput type="text" [formControl]="workoutFormControl">
       </mat-form-field>
-        <button mat-stroked-button class="add">Add to Plan</button>
+        <button mat-stroked-button class="add" (click)="createWorkout()">Add to Plan</button>
     </div>
     <div class="multi-field-form" *ngIf="rightPanel === RightPanelDisplay.RECORDFORM" [formGroup]="recordFormGroup">
       <h2>Add Record</h2>
@@ -137,6 +148,6 @@
       </div>
         <button mat-stroked-button class="add">Save</button>
     </div>
-    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS"></app-record>
+    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records"></app-record>
   </div>
 </div>

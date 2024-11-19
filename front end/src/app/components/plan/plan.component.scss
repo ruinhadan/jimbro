@@ -39,10 +39,11 @@ mat-divider {
             display: flex;
             gap: 1rem;
             justify-content: center;
+            align-items: center;
             
             button {
-                height: 3rem;
-                width: 3rem;
+                height: 36px;
+                width: 36px;
             }
 
             mat-form-field {
@@ -81,21 +82,23 @@ table {
 }
 
 button[mat-stroked-button], button[mat-fab] {
+    background-color: white;
+    box-shadow: none;
+    border: 1px solid mat.get-color-from-palette($jimbro-accent);
     &.add {
-        border-color: mat.get-color-from-palette($jimbro-success);
+        border: 1px solid mat.get-color-from-palette($jimbro-success);
         color: mat.get-color-from-palette($jimbro-success);
     }
 
     &.view {
-        border-color: mat.get-color-from-palette($jimbro-primary);
+        border:1px solid mat.get-color-from-palette($jimbro-primary);
         color: mat.get-color-from-palette($jimbro-primary);
     }
 
     &.delete {
-        background-color: white;
         border: 1px solid mat.get-color-from-palette($jimbro-warn);
         color: mat.get-color-from-palette($jimbro-warn);
-        box-shadow: none;
+        
     }
 
 }
@@ -145,4 +148,11 @@ app-record {
     mat-form-field {
         width: fit-content;
     }
+}
+
+.footer-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: auto;
 }

@@ -4,19 +4,60 @@
 .record-container {
     display: flex;
     flex-direction: column;
+    // margin-left: .5rem;
+    width: 80% !important;
+}
+
+.records {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+
+    mat-card-header {
+        width: auto !important;
+        border-right: .5px solid lightgrey;
+        padding: 0;
+        padding-right: .5rem;
+    }
+
+    mat-card-content {
+        padding: 0;
+    }
 }
 
 .records-root-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
     gap: .5rem;
 }
 
+.record {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+}
+
+
 .record-actions {
     display: flex;
-    width: 100%;
+    gap: 8px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 button[mat-icon-button] {
@@ -32,5 +73,8 @@ button[mat-icon-button] {
 }
 
 mat-card {
-    border-color: mat.get-color-from-palette($jimbro-accent);
+    border-color: mat.get-color-from-palette($jimbro-primary);
+    padding: .5rem;
+    // outline: none;
+    // border: none
 }
