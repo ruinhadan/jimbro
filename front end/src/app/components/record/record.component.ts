@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { MatDivider } from '@angular/material/divider';
 })
 export class RecordComponent implements OnChanges{
   @Input() records: RecordDTO[] = [];
+  @Output() recordDeleted: EventEmitter<RecordDTO> = new EventEmitter<RecordDTO>();
   Unit = Unit
   recordsMap = new Map<string, RecordDTO[]>()
   displayedColumns = ["record", "actions"]
@@ -37,6 +38,10 @@ export class RecordComponent implements OnChanges{
       this.recordsMap.set(key, curRecords)
     })
 
+  }
+
+  deleteRecord(record: RecordDTO) {
+    this.recordDeleted.emit(record);
   }
 
   

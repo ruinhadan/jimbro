@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Exercise, PlanDTO, Record, RecordDTO, WorkoutDTO } from '../shared/types';
+import { Exercise, ExerciseDTO, PlanDTO, Record, RecordDTO, WorkoutDTO } from '../shared/types';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -53,6 +53,23 @@ export class BackendService {
   addRecordToWorkout(workout: WorkoutDTO, exercise: Exercise, record: any) {
     record.exercise = exercise
     return this.httpClient.post(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records`, record)
+  }
+
+  deletePlan(plan: PlanDTO) {
+    return this.httpClient.delete(`${environment.backendURL}/plans/${plan.id}`);
+  }
+
+  deleteWorkout(plan: PlanDTO, workout: WorkoutDTO) {
+    return this.httpClient.delete(`${environment.backendURL}/plans/${plan.id}/workouts/${workout.id}`);
+  }
+
+  deleteExerciseFromWorkout(workout: WorkoutDTO, exercise: Exercise) {
+    return this.httpClient.delete(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}`);
+  }
+
+  deleteRecord(workout: WorkoutDTO, exercise: Exercise, record: RecordDTO) {
+    console.log(workout, record, exercise)
+    return this.httpClient.delete(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records/${record.id}`);
   }
 
 }

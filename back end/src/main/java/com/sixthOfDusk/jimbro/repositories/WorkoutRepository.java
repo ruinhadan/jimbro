@@ -32,4 +32,19 @@ public interface WorkoutRepository extends ListCrudRepository<Workout, Long>{
     @Modifying
     @Query(value = "insert into workout_records values (?1, ?2)", nativeQuery = true)
     public void addRecordToWorkout(long recordId, long workoutId);
+
+    @Query(value = "select records_id from workout_records where workout_id in ?1", nativeQuery = true)
+    public List<Long> findAllRecordIdsForWorkout(List<Long> workoutIds);
+
+    @Query(value = "select id from record join workout_records on record.id = workout_records.records_id where record.exercise_id = ?2 and workout_records.workout_id = ?1", nativeQuery = true)
+    public List<Long> findRecordIdsForExercise(long workoutId, long exerciseId);
+
+    @Modifying
+    @Query(value = "delete from workout_exercises where workout_id in ?1", nativeQuery = true)
+    public void deleteWorkoutFKs(List<Long> workoutIds);
+
+    @Modifying
+    @Query(value = "delete from workout_exercises where workout_id = ?1 and exercises_id = ?2", nativeQuery = true)
+    public void deleteExerciseFKs(long workoutId, long exerciseId);
+    
 }

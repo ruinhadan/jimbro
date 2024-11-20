@@ -48,7 +48,7 @@
             <div class="exercise-operations">
               <button mat-fab class="add" (click)="openRecordForm(element)"><mat-icon>add</mat-icon></button>
               <button mat-fab class="view" (click)="openRecordList(element)"><mat-icon>visibility</mat-icon></button>
-              <button mat-fab aria-label="Delete Button" class="delete">
+              <button mat-fab aria-label="Delete Button" class="delete" (click)="deleteExerciseFromWorkout(element)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -63,11 +63,11 @@
         <mat-icon>add</mat-icon>
         Add Exercise
       </button>
-      <button mat-fab extended class="delete" *ngIf="selectedPlan">
+      <button mat-fab extended class="delete" *ngIf="selectedPlan" (click)="deletePlan()">
         <mat-icon>delete</mat-icon>
         Delete Plan
       </button>
-      <button mat-fab extended class="delete" *ngIf="selectedPlan && selectedWorkout">
+      <button mat-fab extended class="delete" *ngIf="selectedPlan && selectedWorkout" (click)="deleteWorkout()">
         <mat-icon>delete</mat-icon>
         Delete Workout
       </button>
@@ -148,6 +148,6 @@
       </div>
         <button mat-stroked-button class="add" (click)="addRecordToWorkout()">Save</button>
     </div>
-    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records"></app-record>
+    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records" (recordDeleted)="deleteRecord($event)"></app-record>
   </div>
 </div>

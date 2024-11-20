@@ -23,4 +23,12 @@ public interface PlanRepository extends ListCrudRepository<Plan, Long> {
     @Modifying
     @Query(value="insert into plan_workouts values (?1, ?2)", nativeQuery = true)
     public void addWorkoutToPlan(long planId, long workoutId);
+
+    @Modifying
+    @Query(value = "delete from plan_workouts where plan_id = ?1", nativeQuery = true)
+    public void deletePlanFKs(long planId);
+
+    @Modifying
+    @Query(value = "delete from plan_workouts where workouts_id = ?1", nativeQuery = true)
+    public void deleteWorkoutFKs(long workoutId);
 }

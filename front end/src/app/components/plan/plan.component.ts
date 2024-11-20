@@ -76,20 +76,22 @@ export class PlanComponent {
   }
 
   openRecordList(exercise: Exercise) {
+    this.selectedExercise = exercise;
     this.getRecordsForExercise(exercise);
     this.rightPanel = this.RightPanelDisplay.RECORDS;
   }
 
   getRecordsForExercise(exercise: Exercise) {
-    console.log(this.selectedWorkout, exercise)
     this.backendService.fetchRecordsForExercise(this.selectedWorkout!, exercise).subscribe({
-      next: (records: RecordDTO[]) => {console.log(records); this.records = records;},
+      next: (records: RecordDTO[]) => {this.records = records;},
       error: (error: Error) => {console.log(error)}
     })
   }
 
   getAllPlans() {
     this.selectedPlan = undefined;
+    this.selectedWorkout = undefined;
+    this.rightPanel = this.RightPanelDisplay.HOWTO;
     this.backendService.fetchAllPlans().subscribe({
       next: (plans: PlanDTO[]) => { this.plans = plans; },
       error: (error: Error) => { console.log(error); }
@@ -106,6 +108,7 @@ export class PlanComponent {
 
   changePlan() {
     this.selectedWorkout = undefined;
+    this.rightPanel = this.RightPanelDisplay.HOWTO;
     this.backendService.fetchWorkoutsForPlan(this.selectedPlan!).subscribe({
       next: (workouts: WorkoutDTO[]) => { this.workouts = workouts; },
       error: (error: Error) => { console.log(error); }
@@ -114,6 +117,7 @@ export class PlanComponent {
   }
 
   changeWorkout() {
+    this.rightPanel = this.RightPanelDisplay.HOWTO;
     this.backendService.fetchExercisesForWorkout(this.selectedWorkout!).subscribe(
       {
         next: (exercises: Exercise[]) => {
@@ -159,5 +163,40 @@ export class PlanComponent {
       })
     }
     
+  }
+
+  deletePlan() {
+    if(confirm("Are you sure you want to delete the Plan? It will delete all Workouts & Records within it.")) {
+      this.backendService.deletePlan(this.selectedPlan!).subscribe({
+        next: () => {alert("Plan deleted successfully!"); this.getAllPlans();},
+        error: (error: Error) => {console.log(error);}
+      })
+    }
+    
+  }
+  deleteWorkout() {
+    if(confirm("Are you sure you want to delete the Workout? It will delete all Records within it.")) {
+      this.backendService.deleteWorkout(this.selectedPlan!, this.selectedWorkout!).subscribe({
+        next: () => {alert("Workout deleted successfully!"); this.changePlan();},
+        error: (error: Error) => {console.log(error);}
+      })
+    }
+  }
+
+  deleteExerciseFromWorkout(exercise: Exercise) {
+    if(confirm("Are you sure you want to delete this exercise from the Workout? It will delete all Records within it.")) {
+      this.backendService.deleteExerciseFromWorkout(this.selectedWorkout!, exercise).subscribe({
+        next: () => {alert("Exercise deleted successfully!"); this.changeWorkout();},
+        error: (error: Error) => {console.log(error);}
+      })
+    }
+  }
+
+  deleteRecord(record: RecordDTO) {
+
+    this.backendService.deleteRecord(this.selectedWorkout!, this.selectedExercise!, record).subscribe({
+      next: () => {alert("Record deleted successfully!"); this.getRecordsForExercise(this.selectedExercise!);},
+      error: (error: Error) => {console.log(error);}
+    })
   }
 }
