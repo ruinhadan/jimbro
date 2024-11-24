@@ -68,8 +68,12 @@ export class BackendService {
   }
 
   deleteRecord(workout: WorkoutDTO, exercise: Exercise, record: RecordDTO) {
-    console.log(workout, record, exercise)
     return this.httpClient.delete(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records/${record.id}`);
+  }
+
+  updateRecord(workout: WorkoutDTO, exercise: Exercise, record: any) {
+    record.exercise = exercise
+    return this.httpClient.put(`${environment.backendURL}/workouts/${workout.id}/exercises/${exercise.id}/records/${record.id}`, record);
   }
 
 }

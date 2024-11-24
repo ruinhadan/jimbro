@@ -162,6 +162,12 @@ public class PlanController {
         recordRepository.save(record);
         workoutRepository.addRecordToWorkout(record.getId(), workoutId);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/workouts/{workoutId}/exercises/{exerciseId}/records/{recordId}")
+    public void updateRecord(@PathVariable long workoutId, @PathVariable long exerciseId, @PathVariable long recordId, @RequestBody Record record) {
+        recordRepository.save(record);
+    }
     
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/exercises")

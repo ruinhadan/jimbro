@@ -30,7 +30,7 @@
             }
           </mat-select>
         </mat-form-field>
-        <button mat-fab class="add" (click)="openWorkoutForm()">
+        <button mat-fab class="add" (click)="openWorkoutForm()" [disabled]="workouts.length == 7">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -82,12 +82,11 @@
       <ul>
         <li>First create a plan. Examples of Plans are 'Push Pull Legs', 'Bro Split', 'Upper Lower Split'.</li>
         <li>Then, add Workouts to the plan. Workout here represents everything done in a single session. A Plan can have
-          upto workouts, 1 for each day of the week.</li>
+          upto 7 workouts, 1 for each day of the week.</li>
         <li>Each Workout in turn will have Exercises. Add them when you create the Workout, or later.</li>
         <li>To track your progress, select the Plan -> select the workout -> select the exercise -> add records of what
           you did on that day - weights, sets, reps.</li>
       </ul>
-      <p>// This card will disappear once you've created your first Plan, Workout and added your first Record. //</p>
     </div>
     <div class="single-field-form" *ngIf="rightPanel === RightPanelDisplay.EXERCISEFORM">
       <h2>Add Exercise</h2>
@@ -118,7 +117,7 @@
         <button mat-stroked-button class="add" (click)="createWorkout()">Add to Plan</button>
     </div>
     <div class="multi-field-form" *ngIf="rightPanel === RightPanelDisplay.RECORDFORM" [formGroup]="recordFormGroup">
-      <h2>Add Record</h2>
+      <h2>@if (selectedRecord) {Edit} @else {Add} Record</h2>
       <mat-form-field>
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date">
@@ -133,8 +132,8 @@
         <mat-form-field>
           <mat-label>Unit</mat-label>
           <mat-select formControlName="unit">
-            <mat-option value=0>kg</mat-option>
-            <mat-option value=1>lbs</mat-option>
+            <mat-option [value]="0">kg</mat-option>
+            <mat-option [value]="1">lbs</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -146,8 +145,10 @@
           <input matInput type="text" formControlName="reps">
         </mat-form-field>
       </div>
-        <button mat-stroked-button class="add" (click)="addRecordToWorkout()">Save</button>
+      @if (selectedRecord) {<button mat-stroked-button class="add" (click)="updateRecordValues()">Update</button>}
+      @else {<button mat-stroked-button class="add" (click)="addRecordToWorkout()">Save</button>}
+        
     </div>
-    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records" (recordDeleted)="deleteRecord($event)"></app-record>
+    <app-record *ngIf="rightPanel === RightPanelDisplay.RECORDS" [records]="records" (recordDeleted)="deleteRecord($event)" (recordEdited)="editRecord($event)"></app-record>
   </div>
 </div>

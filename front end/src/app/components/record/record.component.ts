@@ -16,6 +16,7 @@ import { MatDivider } from '@angular/material/divider';
 export class RecordComponent implements OnChanges{
   @Input() records: RecordDTO[] = [];
   @Output() recordDeleted: EventEmitter<RecordDTO> = new EventEmitter<RecordDTO>();
+  @Output() recordEdited: EventEmitter<RecordDTO> = new EventEmitter<RecordDTO>();
   Unit = Unit
   recordsMap = new Map<string, RecordDTO[]>()
   displayedColumns = ["record", "actions"]
@@ -42,6 +43,10 @@ export class RecordComponent implements OnChanges{
 
   deleteRecord(record: RecordDTO) {
     this.recordDeleted.emit(record);
+  }
+
+  editRecord(record: RecordDTO) {
+    this.recordEdited.emit(record);
   }
 
   

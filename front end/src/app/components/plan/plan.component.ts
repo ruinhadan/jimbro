@@ -40,6 +40,7 @@ export class PlanComponent {
   workoutFormControl: FormControl = new FormControl('');
   exercises: Exercise[] = [];
   selectedExercise: Exercise | undefined;
+  selectedRecord: RecordDTO | undefined;
   records: RecordDTO[] = [];
   recordFormGroup: FormGroup = new FormGroup(
     {
@@ -198,5 +199,34 @@ export class PlanComponent {
       next: () => {alert("Record deleted successfully!"); this.getRecordsForExercise(this.selectedExercise!);},
       error: (error: Error) => {console.log(error);}
     })
+  }
+
+  editRecord(record: RecordDTO) {
+    this.rightPanel = this.RightPanelDisplay.RECORDFORM;
+    this.selectedRecord = record;
+    this.recordFormGroup.setValue({
+      weight: record.weight,
+      sets: record.sets,
+      reps: record.reps,
+      unit: record.unit,
+      date: record.date
+    })
+  }
+
+  updateRecordValues() {
+    if(this.recordFormGroup.valid) {
+      const updatedValues = this.recordFormGroup.value;
+      this.selectedRecord!.date = updatedValues.date;
+      this.selectedRecord!.reps = updatedValues.reps;
+      this.selectedRecord!.sets = updatedValues.sets;
+      this.selectedRecord!.unit = updatedValues.unit;
+      this.selectedRecord!.weight = updatedValues.weight;
+
+      this.backendService.updateRecord(this.selectedWorkout!, this.selectedExercise!, this.selectedRecord!).subscribe({
+        next: () => {alert("Record updated successfully!"); this.selectedRecord = undefined; this.openRecordList(this.selectedExercise!);},
+        error: (error: Error) => {console.log(error);}
+      })
+    }
+    
   }
 }

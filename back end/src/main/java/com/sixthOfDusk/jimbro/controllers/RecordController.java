@@ -35,7 +35,7 @@ public class RecordController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/records/{id}")
-    public ResponseEntity<Optional<Record>> getRecord(@PathVariable UUID id) {
+    public ResponseEntity<Optional<Record>> getRecord(@PathVariable long id) {
         return ResponseEntity.ok(recordRepository.findById(id));
     }
 
