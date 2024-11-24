@@ -1,0 +1,45 @@
+    <div class="container">
+        <div class="column">
+            <h1>jimbro</h1>
+        <h2>Gym Assistant & Workout Tracker</h2>
+        <mat-list>
+            <div mat-subheader>Current Features</div>
+            @for (feature of currentFeaures; track feature) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>check</mat-icon>
+                <div matListItemTitle>{{feature}}</div>
+              </mat-list-item>
+            }
+            <div mat-subheader>WIP Features</div>
+            @for (feature of WIPFeatures; track feature) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>sync</mat-icon>
+                <div matListItemTitle>{{feature}}</div>
+              </mat-list-item>
+            }
+          </mat-list>
+          
+        <section class="button-container">
+            <a mat-fab extended [routerLink]="['/plan']">
+                <mat-icon>add</mat-icon>
+                New Plan
+              </a>
+            <input type="file" (change)="openExistingPlan($event)" accept=".json" #fileUpload>
+            <button mat-fab extended (click)="fileUpload.click()">
+                <mat-icon>upload</mat-icon>
+                Open Plan
+            </button>
+        </section>   
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+        <div class="column">
+            <!-- <div class="image-grid">
+                <img src="../../../assets/ex-1.jpg" alt="" srcset="">
+                <img src="../../../assets/ex-2.jpg" alt="" srcset="">
+                <img src="../../../assets/ex-3.jpg" alt="" srcset="">
+                <img src="../../../assets/ex-4.jpg" alt="" srcset="">
+            </div> -->
+            Auth Coming Soon!
+        </div>
+    </div>
+

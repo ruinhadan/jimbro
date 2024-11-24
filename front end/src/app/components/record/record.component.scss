@@ -1,0 +1,82 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
+.record-container {
+    display: flex;
+    flex-direction: column;
+    // margin-left: .5rem;
+    width: 80% !important;
+}
+
+.records {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+
+    mat-card-header {
+        width: auto !important;
+        // border-right: .5px solid lightgrey;
+        padding: 0;
+        // padding-right: .5rem;
+    }
+
+    mat-card-content {
+        padding: 0;
+        border-left: .5px solid lightgrey;
+        padding-left: .5rem;
+    }
+}
+
+.records-root-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: .5rem;
+}
+
+.record {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+}
+
+
+.record-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+button[mat-icon-button] {
+    &.delete {
+        color: mat.get-color-from-palette($jimbro-warn);
+        box-shadow: none;
+    }
+
+    &.edit {
+        color: mat.get-color-from-palette($jimbro-primary);
+        box-shadow: none;
+    }
+}
+
+mat-card {
+    border-color: mat.get-color-from-palette($jimbro-primary);
+    padding: .5rem;
+    // outline: none;
+    // border: none
+}

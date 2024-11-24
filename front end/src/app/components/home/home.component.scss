@@ -1,0 +1,111 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    line-height: 1.5rem;
+    overflow-y: auto;
+}
+
+h2 {
+    font: $heading-font;
+    color: black;
+    margin-bottom: 8px;
+    text-align: center;
+    padding: .25rem 0 .25rem 0;
+}
+
+h1 {
+    font: $title-font;
+    font-size: 7rem;
+    color: mat.get-color-from-palette($jimbro-primary);
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 32px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.column {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-divider {
+    color: black;
+    height: 100%;
+}
+
+mat-list-item {
+    height: fit-content !important;
+    padding: 4px 0;
+}
+
+[matListItemTitle] {
+    white-space: pre-wrap;
+}
+
+img {
+    height: 50%;
+    width: 50%;
+}
+
+.image-grid {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 840px){
+    .button-container {
+        flex-direction: column;
+    }
+    mat-divider {
+        display: none;
+    }
+    h1 {
+        font-size: 5rem;
+    }
+    .column {
+        width: 100%;
+    }
+    .container {
+        align-items: flex-start;
+    }
+}
+
+@media (600px <= width < 840px) {
+    .button-container {
+        flex-direction: row;
+    }
+}
+
+@media (840px <= width < 1200px) {
+    h1 {
+        font-size: 5rem;
+    }
+}
+
+
+
